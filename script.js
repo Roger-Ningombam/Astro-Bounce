@@ -466,7 +466,6 @@ function gameLoop(currentTime) {
             ctx.font = '24px Arial';
             ctx.fillText('Press any key to start', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50);
         }
-    } else if (gameState === 'gameOver') {
 
 // ... (code after startScreen) ...
     } else if (gameState === 'gameOver') {
