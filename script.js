@@ -22,6 +22,12 @@ let fps = 0;
 const playerImage = new Image();
 playerImage.src = 'astronaut.png';
 
+// ... (playerImage definition) ...
+const startScreenImage = new Image();
+startScreenImage.src = 'astro_bounce_start-page.png'; // Make sure this file is in the same directory as your index.html
+
+// ... (rest of the file) ...
+
 // --- Input Handling and Helper Functions ---
 let keys = {};
 
@@ -443,21 +449,26 @@ function gameLoop(currentTime) {
         ctx.fillText('GAME COMPLETE!', GAME_WIDTH / 2, GAME_HEIGHT / 2);
         ctx.font = '24px Arial';
         ctx.fillText('Thanks for playing!', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50);
+    // ... (code before startScreen) ...
+
     } else if (gameState === 'startScreen') {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-        ctx.fillStyle = 'white';
-        ctx.font = '60px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('ASTRO-BOUNCE', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 100);
-        ctx.font = '28px Arial';
-        ctx.fillText('Collect the Gold Vortex to Win!', GAME_WIDTH / 2, GAME_HEIGHT / 2 - 30);
-        ctx.fillText('Controls:', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 30);
-        ctx.fillText('Desktop: Arrow Keys / A, D for Movement, Spacebar for Bounce', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 70);
-        ctx.fillText('Mobile: On-screen buttons', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 110);
-        ctx.fillStyle = '#FFD700';
-        ctx.font = '48px Arial';
-        ctx.fillText('PRESS SPACE TO START', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 200);
+        // NEW: Draw the background image instead of text instructions
+        if (startScreenImage.complete && startScreenImage.naturalWidth > 0) {
+            ctx.drawImage(startScreenImage, 0, 0, GAME_WIDTH, GAME_HEIGHT);
+        } else {
+            // Fallback if image doesn't load
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+            ctx.fillStyle = 'white';
+            ctx.font = '48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('ASTRO-BOUNCE', GAME_WIDTH / 2, GAME_HEIGHT / 2);
+            ctx.font = '24px Arial';
+            ctx.fillText('Press any key to start', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50);
+        }
+    } else if (gameState === 'gameOver') {
+
+// ... (code after startScreen) ...
     } else if (gameState === 'gameOver') {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
         ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
